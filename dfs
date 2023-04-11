@@ -1,0 +1,18 @@
+#dfs
+graph={1:[2,3,4],2:[5,6],3:[6,7],5:[8,9],6:[10]}
+target=int(input("enter target node"))
+def dfs(graph,target):
+    openl=[1]
+    closed=[]
+    while(openl[0]!=target):
+        if openl[0] not in closed:
+            openl=graph[openl[0]]+openl
+            closed.insert(0,openl[0])
+        del openl[0]
+    return openl,closed
+o,c=dfs(graph,target)
+for i in o:
+    print(i)
+print("\n")
+for i in c:
+    print(i)
