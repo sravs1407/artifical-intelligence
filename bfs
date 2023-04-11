@@ -1,0 +1,16 @@
+graph={1:[2,3,4],2:[5,6],3:[6,7],5:[8,9],6:[10]}
+target=int(input("enter target node"))
+openl=[1]
+closed=[]
+nodes=[1,2,3,4,5,6,7,8,9,10]
+while(openl[0]!=target):
+    if openl[0] not in closed:
+        if openl[0] in graph.keys():
+            openl=openl+graph[openl[0]]
+        closed.insert(0,openl[0])
+        del openl[0]
+for i in openl:
+    print(i)
+print("\n")
+for i in closed:
+    print(i)
