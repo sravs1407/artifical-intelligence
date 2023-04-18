@@ -1,0 +1,31 @@
+def appen(a,closed,openl):
+    l=[] 
+    for i in a:
+        if type(i)!=int and i not in closed and i not in openl:
+            l.append(i)
+        if type(i)==int and a not in closed and a not in openl:
+            l.append(a)
+            break;
+    return l;
+def waterjugdfs():
+    present=[0,0]
+    target=[2,0]
+    openl=[[0,0]]
+    closed=[]
+    while openl[0]!=target:
+        if openl[0] not in closed:
+            a=fill(openl[0][0],openl[0][1])
+            b=empty(openl[0][0],openl[0][1])
+            c=transfer(openl[0][0],openl[0][1])
+            closed.insert(0,openl[0])
+            del openl[0]
+            openl=appen(a,closed,openl)+appen(b,closed,openl)+appen(c,closed,openl)+openl
+        print(openl)
+        print(closed)
+    return openl[0]
+print(waterjugdfs())
+
+output:
+
+[[2, 4], [5, 1], [0, 1], [1, 0], [1, 4], [5, 4], [5, 0], [0, 0]]
+[2, 0]
