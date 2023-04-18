@@ -1,0 +1,64 @@
+x=5
+y=4
+def fill(a,b):
+    l=[]
+    if a==x and b==y:
+        return [a,b]
+    if a<x:
+        l.append([x,b])
+    if b<y:
+        l.append([a,y])
+    return l;
+def empty(a,b):
+    l=[]
+    if a==0 and b==0:
+        return [0,0]
+    if a!=0:
+        l.append([0,b])
+    if b!=0:
+        l.append([a,0])
+    return l;
+def transfer(a,b):
+    l=[]
+    if(a==0):
+        if b<=x:
+            l.append([b,0])
+    if(b==0):
+        if a<=y:
+            l.append([0,a])
+    if (a+b>=x):
+        l.append([x,b-(x-a)])
+    if (a+b>=y):
+        l.append([a-(y-b),y])
+    return l;
+def appen(a,closed,openl):
+    l=[] 
+    for i in a:
+        if type(i)!=int and i not in closed and i not in openl:
+            l.append(i)
+        if type(i)==int and a not in closed and a not in openl:
+            l.append(a)
+            break;
+    return l;
+def waterjugbfs():
+    present=[0,0]
+    target=[2,0]
+    openl=[[0,0]]
+    closed=[]
+    while openl[0]!=target:
+        if openl[0] not in closed:
+            a=fill(openl[0][0],openl[0][1])
+            b=empty(openl[0][0],openl[0][1])
+            c=transfer(openl[0][0],openl[0][1])
+            openl=openl+appen(a,closed,openl)+appen(b,closed,openl)+appen(c,closed,openl)
+            closed.insert(0,openl[0])
+        del openl[0]
+    print(openl)
+    print(closed)
+    return openl[0]
+print(waterjugbfs())
+
+output:
+[[2, 0], [3, 4]]
+[[3, 0], [2, 4], [0, 3], [5, 1], [5, 3], [0, 1], [4, 4], [1, 0], [4, 0], [1, 4], [5, 4], [0, 4], [5, 0], [0, 0]]
+[2, 0]
