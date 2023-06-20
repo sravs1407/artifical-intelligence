@@ -1,0 +1,21 @@
+#greedy best first search
+graph={0:[1,2,5],1:[3],2:[5],3:[5,6],4:[6,7],5:[4,8],6:[7],8:[4,9],9:[7]}
+h=[1,2,3,4,5,6,0,8,9,10]
+goal=7
+def gbfs(graph,start,h):
+  visited=[]
+  notvisit=[[h[start],start]]
+  while(h[notvisit[0][1]]!=0):
+    if notvisit[0][1] not in visited:
+      if notvisit[0][1] in graph.keys():
+         for i in graph[notvisit[0][1]]:
+          if i not in notvisit:
+            notvisit.append([notvisit[0][0]+h[notvisit[0][1]],i])
+    visited.append(notvisit[0][1])
+    del notvisit[0]
+    notvisit.sort()
+  return notvisit[0][0];
+print(gbfs(graph,0,h))
+
+output:
+8
