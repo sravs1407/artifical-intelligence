@@ -1,0 +1,70 @@
+#8puzzle using A*
+import copy
+start=[[0,1,3],[4,2,5],[7,8,6]]
+goal=[[1,2,3],[4,5,6],[7,8,0]]
+def elementindex(matrix):
+  for i in range(0,len(matrix)):
+    for j in range(0,len(matrix[i])):
+      if(matrix[i][j]==0):
+        return i,j;
+def value(matrix,goal,cost):
+  count=0
+  for i in range(0,len(matrix)):
+    for j in range(0,len(matrix[i])):
+      if(matrix[i][j]!=goal[i][j]):
+        count+=1
+  return count+cost;
+def operations(i,j,matrix,goal,c):
+  mat=copy.deepcopy(matrix)
+  val=90
+  if (i-1)>-1:
+    up=copy.deepcopy(matrix)
+    up[i][j]=up[i-1][j]
+    up[i-1][j]=0
+    temp=value(up,goal,c)
+    if(temp<val):
+      mat=up
+      val=temp
+  if (i+1)<len(matrix):
+    down=copy.deepcopy(matrix)
+    down[i][j]=down[i+1][j]
+    down[i+1][j]=0
+    temp=value(down,goal,c)
+    if(temp<val):
+      mat=down
+      val=temp
+  if (j-1)>-1:
+    left=copy.deepcopy(matrix)
+    left[i][j]=left[i][j-1]
+    left[i][j-1]=0
+    temp=value(left,goal,c)
+    if(temp<val):
+      mat=left
+      val=temp
+  if (j+1)<len(matrix):
+    right=copy.deepcopy(matrix)
+    right[i][j]=right[i][j+1]
+    right[i][j+1]=0
+    temp=value(right,goal,c)
+    if(temp<val):
+      mat=right
+      val=temp
+  return mat;
+def eightpuzzleAstar(start,goal):
+  m=copy.deepcopy(start)
+  cost=0
+  while(m!=goal):
+    print(m)
+    i,j=elementindex(m)
+    m=operations(i,j,m,goal,cost)
+    cost+=1
+  return m;
+res=eightpuzzleAstar(start,goal)
+print(res)
+
+output:
+[[0, 1, 3], [4, 2, 5], [7, 8, 6]]
+[[1, 0, 3], [4, 2, 5], [7, 8, 6]]
+[[1, 2, 3], [4, 0, 5], [7, 8, 6]]
+[[1, 2, 3], [4, 5, 0], [7, 8, 6]]
+[[1, 2, 3], [4, 5, 6], [7, 8, 0]]
